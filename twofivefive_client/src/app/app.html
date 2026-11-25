@@ -1,0 +1,15 @@
+<a
+  href="#contenido"
+  class="btn btn-dark sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60]"
+  (click)="skipToContent($event, main)"
+>
+  Saltar al contenido
+</a>
+
+<app-header />
+
+<main #main id="contenido" tabindex="-1" class="outline-none">
+  <router-outlet />
+</main>
+
+<app-footer />

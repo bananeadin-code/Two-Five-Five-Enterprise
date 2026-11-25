@@ -1,0 +1,64 @@
+<footer class="bg-ink-900 text-ink-300">
+  <div class="shell grid gap-12 py-16 md:grid-cols-[1.6fr_1fr_1fr]">
+    <div class="max-w-sm">
+      <a routerLink="/" class="inline-block rounded-lg">
+        <app-logo tone="light" size="lg" />
+      </a>
+      <p class="mt-6 text-sm leading-relaxed">
+        {{ site.summary }} Con base en {{ site.city }}.
+      </p>
+    </div>
+
+    <div>
+      <h2 class="eyebrow text-ink-400">Explorar</h2>
+      <ul class="mt-5 space-y-3 text-sm">
+        @for (link of links; track link.fragment) {
+          <li>
+            <a
+              routerLink="/"
+              [fragment]="link.fragment"
+              class="transition-colors duration-200 hover:text-white"
+            >
+              {{ link.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="eyebrow text-ink-400">Contacto</h2>
+      <ul class="mt-5 space-y-3 text-sm">
+        <li>
+          <a
+            [href]="'mailto:' + site.email"
+            class="transition-colors duration-200 hover:text-white"
+          >
+            {{ site.email }}
+          </a>
+        </li>
+        @for (channel of site.channels; track channel.href) {
+          <li>
+            <a
+              [href]="channel.href"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="transition-colors duration-200 hover:text-white"
+            >
+              {{ channel.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-white/10">
+    <div
+      class="shell flex flex-col gap-2 py-6 text-xs sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p>© {{ year }} {{ site.name }}</p>
+      <p class="font-mono text-ink-400" aria-hidden="true">255.255.255.255</p>
+    </div>
+  </div>
+</footer>
