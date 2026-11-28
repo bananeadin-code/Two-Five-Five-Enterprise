@@ -1,18 +1,19 @@
-<header class="border-b transition-colors duration-200" [class]="barClass()">
-  <nav class="shell flex h-18 items-center justify-between gap-6" aria-label="Principal">
+<header class="border-b mt-4 transition-colors duration-200" [class]="barClass()">
+  <nav class="shell flex h-20 items-center justify-between gap-6 md:h-24" aria-label="Principal">
     <a routerLink="/" class="rounded-lg" (click)="closeMenu()">
       <app-logo [label]="siteName" />
     </a>
 
     <ul
-      class="hidden items-center gap-1 rounded-full border border-line bg-surface/80 p-1.5 shadow-soft md:flex"
+      class="hidden items-center gap-1 rounded-xl border border-line bg-surface/80 p-1 shadow-soft md:flex"
     >
-      @for (link of links; track link.fragment) {
+      @for (link of links; track link.path) {
         <li>
           <a
-            routerLink="/"
-            [fragment]="link.fragment"
-            class="block rounded-full px-4 py-2 text-sm font-medium text-ink-600 transition-colors duration-200 hover:bg-brand-50 hover:text-ink-900"
+            [routerLink]="link.path"
+            routerLinkActive="bg-brand-50 text-ink-900"
+            ariaCurrentWhenActive="page"
+            class="block rounded-lg px-4 py-2 text-sm font-medium text-ink-600 transition-colors duration-200 hover:bg-brand-50 hover:text-ink-900"
           >
             {{ link.label }}
           </a>
@@ -21,14 +22,14 @@
     </ul>
 
     <div class="flex items-center gap-2">
-      <a routerLink="/" [fragment]="contact.fragment" class="btn btn-primary hidden md:inline-flex">
+      <a [routerLink]="contact.path" class="btn btn-primary hidden md:inline-flex">
         {{ contact.label }}
       </a>
 
       <button
         #toggle
         type="button"
-        class="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-line bg-surface text-ink-900 md:hidden"
+        class="inline-flex size-11 cursor-pointer items-center justify-center rounded-lg border border-line bg-surface text-ink-900 md:hidden"
         aria-controls="menu-movil"
         [attr.aria-expanded]="menuOpen()"
         (click)="toggleMenu()"
@@ -55,15 +56,16 @@
 
   <div
     id="menu-movil"
-    class="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line md:hidden"
+    class="max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-line md:hidden"
     [hidden]="!menuOpen()"
   >
     <ul class="shell flex flex-col py-4">
-      @for (link of links; track link.fragment) {
+      @for (link of links; track link.path) {
         <li>
           <a
-            routerLink="/"
-            [fragment]="link.fragment"
+            [routerLink]="link.path"
+            routerLinkActive="text-brand-700"
+            ariaCurrentWhenActive="page"
             class="block py-3 text-base font-medium text-ink-700"
             (click)="closeMenu()"
           >
@@ -72,12 +74,7 @@
         </li>
       }
       <li class="pt-4">
-        <a
-          routerLink="/"
-          [fragment]="contact.fragment"
-          class="btn btn-primary w-full"
-          (click)="closeMenu()"
-        >
+        <a [routerLink]="contact.path" class="btn btn-primary w-full" (click)="closeMenu()">
           {{ contact.label }}
         </a>
       </li>

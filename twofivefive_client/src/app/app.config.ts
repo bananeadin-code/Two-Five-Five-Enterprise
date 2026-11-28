@@ -5,10 +5,11 @@ import {
   TitleStrategy,
   withComponentInputBinding,
   withInMemoryScrolling,
-  withRouterConfig,
 } from '@angular/router';
-import { provideFragmentFocus } from '@core/routing/fragment-focus';
 import { PageTitleStrategy } from '@core/routing/page-title.strategy';
+import { provideRouteFocus } from '@core/routing/route-focus';
+import { PortfolioRepository } from '@features/portfolio/data-access/portfolio-repository';
+import { StaticPortfolioRepository } from '@features/portfolio/data-access/static-portfolio-repository';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -17,11 +18,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(
       routes,
       withComponentInputBinding(),
-      withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
-      withRouterConfig({ onSameUrlNavigation: 'reload' }),
+      withInMemoryScrolling({ scrollPositionRestoration: 'enabled' }),
     ),
     { provide: TitleStrategy, useClass: PageTitleStrategy },
-    provideFragmentFocus(),
+    provideRouteFocus(),
     provideHttpClient(withFetch()),
+    { provide: PortfolioRepository, useClass: StaticPortfolioRepository },
   ],
 };

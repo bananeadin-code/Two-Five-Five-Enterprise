@@ -1,0 +1,43 @@
+<div
+  role="tablist"
+  aria-label="Categorías de servicios"
+  class="inline-flex gap-1 rounded-xl border border-line bg-surface p-1 shadow-soft"
+>
+  @for (category of categories; track category.id; let i = $index) {
+    <button
+      #tab
+      type="button"
+      role="tab"
+      [id]="'tab-' + category.id"
+      [attr.aria-selected]="category.id === selectedId()"
+      [attr.aria-controls]="'panel-' + category.id"
+      [tabIndex]="category.id === selectedId() ? 0 : -1"
+      class="h-10 cursor-pointer rounded-lg px-4 text-sm font-medium transition-colors duration-200"
+      [class.bg-ink-900]="category.id === selectedId()"
+      [class.text-white]="category.id === selectedId()"
+      [class.text-ink-600]="category.id !== selectedId()"
+      (click)="select(category.id)"
+      (keydown)="onTabKeydown($event, i)"
+    >
+      {{ category.label }}
+    </button>
+  }
+</div>
+
+@for (category of categories; track category.id) {
+  <div
+    role="tabpanel"
+    [id]="'panel-' + category.id"
+    [attr.aria-labelledby]="'tab-' + category.id"
+    [hidden]="category.id !== selectedId()"
+    class="mt-10"
+  >
+    <h2 class="sr-only">{{ category.label }}</h2>
+    <p class="max-w-2xl text-ink-600">{{ category.summary }}</p>
+    <ul class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+      @for (service of category.services; track service.id) {
+        <li><app-service-card [service]="service" /></li>
+      }
+    </ul>
+  </div>
+}

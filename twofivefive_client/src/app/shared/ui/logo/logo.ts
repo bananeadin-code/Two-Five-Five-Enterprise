@@ -4,13 +4,13 @@ type LogoTone = 'dark' | 'light';
 type LogoSize = 'sm' | 'lg';
 
 const MARK_SIZE: Record<LogoSize, string> = {
-  sm: 'h-7 w-auto',
-  lg: 'h-14 w-auto',
+  sm: 'h-14 w-auto md:h-21',
+  lg: 'h-20 w-auto',
 };
 
 const LABEL_SIZE: Record<LogoSize, string> = {
-  sm: 'text-[1.0625rem]',
-  lg: 'text-2xl',
+  sm: 'text-xl md:text-2xl',
+  lg: 'text-3xl',
 };
 
 const LABEL_TONE: Record<LogoTone, string> = {

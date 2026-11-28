@@ -1,0 +1,114 @@
+<div class="shell pt-8">
+  <a
+    routerLink="/casos"
+    class="inline-flex items-center gap-2 rounded-md text-sm font-medium text-brand-700 hover:text-brand-800"
+  >
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 16 16"
+      class="size-3.5"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.75"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="M10 3.5L5.5 8l4.5 4.5" />
+    </svg>
+    Todos los casos
+  </a>
+</div>
+
+@if (study.error()) {
+  <div class="shell py-20">
+    <h1 class="text-3xl font-semibold tracking-tight">No pudimos cargar este caso.</h1>
+    <p class="mt-4 text-ink-600">Vuelve a intentarlo en unos minutos.</p>
+  </div>
+} @else if (study.isLoading()) {
+  <app-case-detail-skeleton />
+} @else {
+  @if (study.value(); as current) {
+    <article class="motion-safe:animate-fade-in">
+      <app-page-header [title]="current.title" [intro]="current.summary">
+        <div class="mt-6 flex items-center gap-3 text-xs">
+          <span
+            class="rounded-md border border-brand-200 bg-brand-50 px-2 py-0.5 font-medium text-brand-700"
+          >
+            {{ categoryLabel() }}
+          </span>
+          <span class="font-mono text-ink-500">{{ current.year }}</span>
+        </div>
+      </app-page-header>
+
+      <div class="shell grid gap-12 pb-20 lg:grid-cols-12 lg:gap-16 lg:pb-28">
+        <app-case-cover [study]="current" class="lg:col-span-8" />
+
+        <dl class="divide-y divide-line border-y border-line text-sm lg:col-span-4 lg:self-start">
+          <div class="py-4">
+            <dt class="text-ink-500">Cliente</dt>
+            <dd class="mt-1 font-medium">{{ current.client }}</dd>
+          </div>
+          <div class="py-4">
+            <dt class="text-ink-500">Año</dt>
+            <dd class="mt-1 font-medium">{{ current.year }}</dd>
+          </div>
+          <div class="py-4">
+            <dt class="text-ink-500">Categoría</dt>
+            <dd class="mt-1 font-medium">{{ categoryLabel() }}</dd>
+          </div>
+          <div class="py-4">
+            <dt class="text-ink-500">Tecnologías</dt>
+            <dd class="mt-2">
+              <ul class="flex flex-wrap gap-1.5">
+                @for (tech of current.stack; track tech) {
+                  <li
+                    class="rounded-md border border-line bg-surface px-2 py-0.5 font-mono text-[0.6875rem] text-ink-600"
+                  >
+                    {{ tech }}
+                  </li>
+                }
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="shell grid gap-10 pb-24 md:grid-cols-3 lg:gap-16 lg:pb-32">
+        @for (part of story(); track part.heading) {
+          <section>
+            <h2 class="border-t-2 border-brand-600 pt-4 text-lg font-semibold tracking-tight">
+              {{ part.heading }}
+            </h2>
+            <p class="mt-3 leading-relaxed text-ink-600">{{ part.body }}</p>
+          </section>
+        }
+      </div>
+
+      <section class="shell pb-24 lg:pb-32" aria-labelledby="case-cta-title">
+        <div
+          class="on-dark flex flex-col gap-8 rounded-2xl bg-ink-900 px-8 py-12 text-white sm:px-12 lg:flex-row lg:items-center lg:justify-between"
+        >
+          <div>
+            <h2 id="case-cta-title" class="text-2xl font-semibold tracking-tight sm:text-3xl">
+              ¿Tienes un proyecto parecido?
+            </h2>
+            <p class="mt-3 max-w-xl text-ink-300">
+              Cuéntanos qué necesitas y te respondemos con una propuesta inicial.
+            </p>
+          </div>
+          <a routerLink="/contacto" class="btn btn-primary h-12 shrink-0 px-6">
+            Cuéntanos tu proyecto
+          </a>
+        </div>
+      </section>
+    </article>
+  } @else {
+    <div class="shell flex min-h-[50vh] flex-col justify-center py-20">
+      <h1 class="text-4xl font-semibold tracking-tight">No encontramos este caso.</h1>
+      <p class="mt-4 text-lg text-ink-600">
+        Puede que el enlace esté roto o que el caso ya no esté publicado.
+      </p>
+      <a routerLink="/casos" class="btn btn-primary mt-10 self-start">Ver todos los casos</a>
+    </div>
+  }
+}

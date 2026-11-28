@@ -1,0 +1,26 @@
+@if (cases.error()) {
+  <p role="status" class="text-ink-600">
+    No pudimos cargar los casos. Vuelve a intentarlo en unos minutos.
+  </p>
+} @else if (cases.isLoading()) {
+  <app-case-grid-skeleton />
+} @else {
+  <p class="sr-only" aria-live="polite">
+    {{ visible().length === 1 ? '1 caso' : visible().length + ' casos' }}
+  </p>
+
+  @if (visible().length === 0) {
+    <div class="rounded-xl border border-dashed border-line px-6 py-16 text-center">
+      <p class="text-ink-600">Todavía no hay casos publicados en esta categoría.</p>
+      <button type="button" class="btn btn-secondary mt-6" (click)="clearFilter.emit()">
+        Ver todos los casos
+      </button>
+    </div>
+  } @else {
+    <ul class="grid gap-x-8 gap-y-14 md:grid-cols-2 xl:grid-cols-3">
+      @for (study of visible(); track study.slug) {
+        <li><app-case-card [study]="study" /></li>
+      }
+    </ul>
+  }
+}

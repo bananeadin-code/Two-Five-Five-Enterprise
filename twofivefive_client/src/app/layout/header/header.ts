@@ -10,7 +10,7 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CONTACT_LINK, NAV_LINKS } from '@content/nav-links';
 import { SITE } from '@content/site';
 import { Logo } from '@shared/ui/logo/logo';
@@ -19,7 +19,7 @@ const SCROLL_THRESHOLD = 8;
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink, Logo],
+  imports: [RouterLink, RouterLinkActive, Logo],
   templateUrl: './header.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {

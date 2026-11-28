@@ -1,17 +1,20 @@
-export type SectionId = 'servicios' | 'casos' | 'proceso' | 'nosotros' | 'contacto';
+export type PagePath = '/servicios' | '/casos' | '/proceso' | '/nosotros' | '/contacto';
 
 export interface NavLink {
   readonly label: string;
-  readonly fragment: SectionId;
+  readonly path: PagePath;
 }
 
 export const NAV_LINKS: readonly NavLink[] = [
-  { label: 'Servicios', fragment: 'servicios' },
-  { label: 'Casos', fragment: 'casos' },
-  { label: 'Proceso', fragment: 'proceso' },
-  { label: 'Nosotros', fragment: 'nosotros' },
+  { label: 'Servicios', path: '/servicios' },
+  { label: 'Casos', path: '/casos' },
+  { label: 'Proceso', path: '/proceso' },
+  { label: 'Nosotros', path: '/nosotros' },
 ];
 
-export const CONTACT_LINK: NavLink = { label: 'Contáctanos', fragment: 'contacto' };
+export const CONTACT_LINK: NavLink = { label: 'Contáctanos', path: '/contacto' };
 
-export const FOOTER_LINKS: readonly NavLink[] = [...NAV_LINKS, CONTACT_LINK];
+export const FOOTER_LINKS: readonly NavLink[] = [
+  ...NAV_LINKS,
+  { label: 'Contacto', path: '/contacto' },
+];

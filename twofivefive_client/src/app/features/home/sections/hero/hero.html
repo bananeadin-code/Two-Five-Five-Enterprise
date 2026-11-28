@@ -1,0 +1,42 @@
+<section aria-labelledby="hero-title" class="relative isolate overflow-hidden">
+  <app-hero-backdrop />
+
+  <div
+    class="shell grid items-center gap-16 pt-10 pb-36 lg:grid-cols-[1.05fr_1fr] lg:pt-16 lg:pb-48"
+  >
+    <div class="relative pl-7 sm:pl-10">
+      <span
+        aria-hidden="true"
+        class="absolute top-1 bottom-0 left-0 w-px bg-linear-to-b from-brand-400 via-brand-200 to-transparent"
+      ></span>
+      <span
+        aria-hidden="true"
+        class="absolute top-[0.4rem] left-0 size-2 -translate-x-1/2 rotate-45 bg-brand-600"
+      ></span>
+
+      <p class="text-sm font-medium text-brand-700">{{ content.availability }}</p>
+
+      <h1
+        id="hero-title"
+        class="mt-5 text-[2.75rem] leading-[1.04] font-semibold tracking-[-0.03em] text-balance sm:text-6xl lg:text-[3.5rem] xl:text-[4.25rem]"
+      >
+        {{ content.title.before }}
+        <span class="pr-1 emphasis">{{ content.title.emphasis }}</span>
+        {{ content.title.after }}
+      </h1>
+
+      <p class="mt-6 max-w-[34rem] text-lg leading-relaxed text-ink-600">{{ content.summary }}</p>
+
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a [routerLink]="content.primary.path" class="btn btn-primary h-12 px-6">
+          {{ content.primary.label }}
+        </a>
+        <a [routerLink]="content.secondary.path" class="btn btn-secondary h-12 px-6">
+          {{ content.secondary.label }}
+        </a>
+      </div>
+    </div>
+
+    <app-deploy-preview />
+  </div>
+</section>
