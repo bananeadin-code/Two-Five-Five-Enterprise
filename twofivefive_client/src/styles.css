@@ -41,19 +41,20 @@
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
   }
 
   body {
     @apply bg-canvas font-sans text-ink-900 antialiased;
   }
 
-  [id] {
-    scroll-margin-top: 6rem;
-  }
-
   :focus-visible {
     outline: 2px solid var(--color-brand-600);
     outline-offset: 3px;
+  }
+
+  .on-dark :focus-visible {
+    outline-color: var(--color-white);
   }
 
   ::selection {

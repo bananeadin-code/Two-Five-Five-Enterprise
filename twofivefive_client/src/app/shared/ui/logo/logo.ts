@@ -1,32 +1,39 @@
-import { Component, computed, input } from '@angular/core';
-import { SITE } from '../../../core/config/site';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 type LogoTone = 'dark' | 'light';
 type LogoSize = 'sm' | 'lg';
 
+const MARK_SIZE: Record<LogoSize, string> = {
+  sm: 'h-7 w-auto',
+  lg: 'h-14 w-auto',
+};
+
+const LABEL_SIZE: Record<LogoSize, string> = {
+  sm: 'text-[1.0625rem]',
+  lg: 'text-2xl',
+};
+
+const LABEL_TONE: Record<LogoTone, string> = {
+  dark: 'text-ink-900',
+  light: 'text-white',
+};
+
 @Component({
   selector: 'app-logo',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <img
-      src="brand/logo-mark.png"
-      alt=""
-      width="534"
-      height="355"
-      [class]="size() === 'lg' ? 'h-14 w-auto' : 'h-7 w-auto'"
-    />
-    <span [class]="labelClass()">{{ name }}</span>
+    <img src="brand/logo-mark.png" alt="" width="534" height="355" [class]="markClass()" />
+    <span [class]="labelClass()">{{ label() }}</span>
   `,
   host: { class: 'inline-flex items-center gap-2.5' },
 })
 export class Logo {
+  readonly label = input.required<string>();
   readonly tone = input<LogoTone>('dark');
   readonly size = input<LogoSize>('sm');
 
-  protected readonly name = SITE.name;
-
-  protected readonly labelClass = computed(() => {
-    const color = this.tone() === 'light' ? 'text-white' : 'text-ink-900';
-    const scale = this.size() === 'lg' ? 'text-2xl' : 'text-[1.0625rem]';
-    return `${color} ${scale} font-semibold tracking-tight`;
-  });
+  protected readonly markClass = computed(() => MARK_SIZE[this.size()]);
+  protected readonly labelClass = computed(
+    () => `${LABEL_TONE[this.tone()]} ${LABEL_SIZE[this.size()]} font-semibold tracking-tight`,
+  );
 }

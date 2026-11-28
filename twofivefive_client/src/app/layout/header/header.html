@@ -1,14 +1,7 @@
-<div
-  class="border-b transition-[background-color,border-color] duration-200"
-  [class]="
-    scrolled() || menuOpen()
-      ? 'border-line bg-canvas/85 backdrop-blur-md'
-      : 'border-transparent bg-transparent'
-  "
->
+<header class="border-b transition-colors duration-200" [class]="barClass()">
   <nav class="shell flex h-18 items-center justify-between gap-6" aria-label="Principal">
     <a routerLink="/" class="rounded-lg" (click)="closeMenu()">
-      <app-logo />
+      <app-logo [label]="siteName" />
     </a>
 
     <ul
@@ -33,13 +26,14 @@
       </a>
 
       <button
+        #toggle
         type="button"
         class="inline-flex size-11 cursor-pointer items-center justify-center rounded-full border border-line bg-surface text-ink-900 md:hidden"
         aria-controls="menu-movil"
         [attr.aria-expanded]="menuOpen()"
         (click)="toggleMenu()"
       >
-        <span class="sr-only">{{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}</span>
+        <span class="sr-only">Menú</span>
         <svg
           aria-hidden="true"
           viewBox="0 0 24 24"
@@ -59,32 +53,34 @@
     </div>
   </nav>
 
-  @if (menuOpen()) {
-    <div id="menu-movil" class="border-t border-line md:hidden">
-      <ul class="shell flex flex-col py-4">
-        @for (link of links; track link.fragment) {
-          <li>
-            <a
-              routerLink="/"
-              [fragment]="link.fragment"
-              class="block py-3 text-base font-medium text-ink-700"
-              (click)="closeMenu()"
-            >
-              {{ link.label }}
-            </a>
-          </li>
-        }
-        <li class="pt-4">
+  <div
+    id="menu-movil"
+    class="max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-t border-line md:hidden"
+    [hidden]="!menuOpen()"
+  >
+    <ul class="shell flex flex-col py-4">
+      @for (link of links; track link.fragment) {
+        <li>
           <a
             routerLink="/"
-            [fragment]="contact.fragment"
-            class="btn btn-primary w-full"
+            [fragment]="link.fragment"
+            class="block py-3 text-base font-medium text-ink-700"
             (click)="closeMenu()"
           >
-            {{ contact.label }}
+            {{ link.label }}
           </a>
         </li>
-      </ul>
-    </div>
-  }
-</div>
+      }
+      <li class="pt-4">
+        <a
+          routerLink="/"
+          [fragment]="contact.fragment"
+          class="btn btn-primary w-full"
+          (click)="closeMenu()"
+        >
+          {{ contact.label }}
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>

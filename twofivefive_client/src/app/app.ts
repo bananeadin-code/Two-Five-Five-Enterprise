@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Header } from './core/layout/header/header';
-import { Footer } from './core/layout/footer/footer';
+import { Footer } from '@layout/footer/footer';
+import { Header } from '@layout/header/header';
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, Header, Footer],
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class App {
   protected skipToContent(event: Event, main: HTMLElement): void {

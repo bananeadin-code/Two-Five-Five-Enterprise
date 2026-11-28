@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
-import { CONTACT_LINK, NAV_LINKS } from '../../core/navigation/nav-links';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FOOTER_LINKS } from '@content/nav-links';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Home {
-  protected readonly sections = [...NAV_LINKS, CONTACT_LINK];
+  protected readonly pendingSections = FOOTER_LINKS;
 }

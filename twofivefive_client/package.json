@@ -6,7 +6,13 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "tsc -p tsconfig.app.json --noEmit && tsc -p tsconfig.spec.json --noEmit",
+    "test:ci": "ng test --watch=false",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run test:ci && npm run build"
   },
   "private": true,
   "packageManager": "npm@11.20.0",
@@ -27,12 +33,20 @@
     "@angular/build": "^22.3.0",
     "@angular/cli": "^22.3.0",
     "@angular/compiler-cli": "^22.3.0",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/postcss": "^4.1.12",
+    "angular-eslint": "22.8.0",
+    "eslint": "^10.14.0",
     "jsdom": "^31.0.0",
     "postcss": "^8.5.3",
     "prettier": "^3.8.1",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4.1.12",
     "typescript": "~6.0.2",
+    "typescript-eslint": "8.72.2",
     "vitest": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

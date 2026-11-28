@@ -1,16 +1,19 @@
-<footer class="bg-ink-900 text-ink-300">
+<footer class="on-dark bg-ink-900 text-ink-300">
   <div class="shell grid gap-12 py-16 md:grid-cols-[1.6fr_1fr_1fr]">
     <div class="max-w-sm">
       <a routerLink="/" class="inline-block rounded-lg">
-        <app-logo tone="light" size="lg" />
+        <app-logo [label]="site.name" tone="light" size="lg" />
       </a>
       <p class="mt-6 text-sm leading-relaxed">
-        {{ site.summary }} Con base en {{ site.city }}.
+        {{ site.summary }}
+        @if (site.city) {
+          Con base en {{ site.city }}.
+        }
       </p>
     </div>
 
-    <div>
-      <h2 class="eyebrow text-ink-400">Explorar</h2>
+    <nav aria-labelledby="footer-explorar">
+      <h2 id="footer-explorar" class="eyebrow text-ink-400">Explorar</h2>
       <ul class="mt-5 space-y-3 text-sm">
         @for (link of links; track link.fragment) {
           <li>
@@ -24,7 +27,7 @@
           </li>
         }
       </ul>
-    </div>
+    </nav>
 
     <div>
       <h2 class="eyebrow text-ink-400">Contacto</h2>
@@ -46,6 +49,7 @@
               class="transition-colors duration-200 hover:text-white"
             >
               {{ channel.label }}
+              <span class="sr-only">(abre en una pestaña nueva)</span>
             </a>
           </li>
         }

@@ -1,0 +1,34 @@
+name: Client
+
+on:
+  push:
+    paths:
+      - 'twofivefive_client/**'
+      - '.github/workflows/client.yml'
+  pull_request:
+    paths:
+      - 'twofivefive_client/**'
+      - '.github/workflows/client.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: client-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: twofivefive_client
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: twofivefive_client/.nvmrc
+          cache: npm
+          cache-dependency-path: twofivefive_client/package-lock.json
+      - run: npm ci
+      - run: npm run check
